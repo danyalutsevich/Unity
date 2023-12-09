@@ -4,17 +4,36 @@ using UnityEngine;
 
 public class Sphere : MonoBehaviour
 {
-    Rigidbody sphere;
+	[SerializeField]
+	GameObject anchorCamera;
 
-    void Start()
-    {
-        sphere = GetComponent<Rigidbody>();
-    }
+	[SerializeField]
+	Camera cam;
 
-    void Update()
-    {
-        float av = Input.GetAxis("Vertical");
-        float ah = Input.GetAxis("Horizontal");
-        sphere.AddForce(Time.deltaTime * 1000 * new Vector3(ah, 0, av)); 
-    }
+	Rigidbody sphere;
+	Vector3 anchorOffset;
+
+
+	void Start()
+	{
+		sphere = GetComponent<Rigidbody>();
+		anchorOffset = anchorCamera.transform.position - this.transform.position;
+
+	}
+
+	void Update()
+	{
+		float av = Input.GetAxis("Vertical");
+		float ah = Input.GetAxis("Horizontal");
+
+		Vector3 right = cam.transform.right;
+		Vector3 forward = cam.transform.forward;
+
+		forward.y = 0;
+		forward.Normalize();
+		Vector3 moveDirection = ah * right + av * forward;
+
+		sphere.AddForce(Time.deltaTime * 1000 * new Vector3(ah, 0, av));
+		anchorCamera.transform.position = anchorOffset + this.transform.position;
+	}
 }
