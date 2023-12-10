@@ -37,6 +37,17 @@ public class LabyLightScript : MonoBehaviour
             LabyState.spotLightIntensity = 1.5f;
 
         }
+        float lightIntensity = lightComponent.intensity;
+
+        if(lightIntensity<1f&&Input.GetKey(KeyCode.RightBracket))
+        {
+            lightComponent.intensity = lightIntensity + 0.01f;
+        }
+        if (lightIntensity>0.01f&&Input.GetKey(KeyCode.LeftBracket))
+        {
+            lightComponent.intensity = lightIntensity - 0.01f;
+        }
+       
     }
     private void SetDayLighting()
     {
