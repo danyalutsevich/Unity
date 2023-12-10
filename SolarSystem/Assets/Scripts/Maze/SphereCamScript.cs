@@ -20,30 +20,50 @@ public class SphereCamScript : MonoBehaviour
 		camEulerY = this.transform.eulerAngles.y;
 		ancEulerX = 0;
 		ancEulerY = 0;
-		rod = this.transform.position - cameraAnchor.transform.position;
+		rod = this.transform.position;
 	}
 
 	void Update()
 	{
+
+		if (LabyState.isPaused) return;
 		float mh = Input.GetAxis("Mouse X") * 8;
 		float mv = Input.GetAxis("Mouse Y") * 8;
 
 
-		if (camEulerX - mv >= 35 && camEulerX - mv <= 90)
-		{
+		//if (camEulerX - mv >= 35 && camEulerX - mv <= 90)
+		//{
 			camEulerX -= mv;
 			ancEulerX -= mv;
 
-		}
+		//}
 
 		camEulerY += mh;
 		ancEulerY += mh;
+
+		if (Input.GetKeyDown(KeyCode.V))
+		{
+			LabyState.firstPersonView =
+				!LabyState.firstPersonView;
+		}
 	}
 
 	void LateUpdate()
 	{
+		if (LabyState.isPaused) return;
 		this.transform.eulerAngles = new Vector3(camEulerX, camEulerY, 0);
 
-		this.transform.position = cameraAnchor.transform.position + Quaternion.Euler(ancEulerX, ancEulerY, 0) * rod;
+		if (LabyState.firstPersonView)
+		{
+			Debug.Log("First person");
+			transform.position = cameraAnchor.transform.position;
+		}
+		else
+		{
+			transform.position =
+				Quaternion.Euler(ancEulerX, ancEulerY, 0) * rod;
+		}
+
+		//this.transform.position = cameraAnchor.transform.position + Quaternion.Euler(ancEulerX, ancEulerY, 0) * rod;
 	}
 }

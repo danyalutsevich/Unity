@@ -10,7 +10,7 @@ public class Sphere : MonoBehaviour
 	[SerializeField]
 	Camera cam;
 
-	Rigidbody sphere;
+    Rigidbody sphere;
 	Vector3 anchorOffset;
 
 
@@ -30,10 +30,11 @@ public class Sphere : MonoBehaviour
 		Vector3 forward = cam.transform.forward;
 
 		forward.y = 0;
-		forward.Normalize();
+		forward = forward.normalized;
+
 		Vector3 moveDirection = ah * right + av * forward;
 
-		sphere.AddForce(Time.deltaTime * 1000 * new Vector3(ah, 0, av));
+		sphere.AddForce(Time.deltaTime * 1000 * moveDirection);
 		anchorCamera.transform.position = anchorOffset + this.transform.position;
 	}
 }
