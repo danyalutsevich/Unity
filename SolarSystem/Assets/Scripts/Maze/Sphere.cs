@@ -18,7 +18,7 @@ public class Sphere : MonoBehaviour
 	{
 		sphere = GetComponent<Rigidbody>();
 		anchorOffset = anchorCamera.transform.position - this.transform.position;
-
+		DontDestroyOnLoad(this.gameObject);
 	}
 
 	void Update()

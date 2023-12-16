@@ -19,6 +19,7 @@ public class CameraScript : MonoBehaviour
 
 	void Start()
 	{
+		Debug.Log("Camera script"+LabyState.isDay);
 		camAngleX = transform.eulerAngles.x;
 		camAngleY = transform.eulerAngles.y;
 		camSun = this.transform.position - sun.transform.position;
