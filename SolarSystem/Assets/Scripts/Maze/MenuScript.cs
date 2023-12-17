@@ -1,15 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using TMPro;
 
 
 public class MenuScript : MonoBehaviour
 {
     [SerializeField]
     GameObject canvas;
+
+    [SerializeField]
+    TextMeshProUGUI timer;
 
     [SerializeField]
     Slider musicVolumeSlider;
@@ -30,6 +35,18 @@ public class MenuScript : MonoBehaviour
     }
 
     void Update()    {
+
+        if (!LabyState.isPaused)
+        {
+
+        TimeSpan t = TimeSpan.FromSeconds(Time.realtimeSinceStartup);
+
+        timer.text = String.Format("{0:D2}:{1:D2}:{2:D2}:{3:D3}",
+                        t.Hours,
+                        t.Minutes,
+                        t.Seconds,
+                        t.Milliseconds);
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

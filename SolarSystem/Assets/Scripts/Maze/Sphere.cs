@@ -32,7 +32,16 @@ public class Sphere : MonoBehaviour
 		forward.y = 0;
 		forward = forward.normalized;
 
-		Vector3 moveDirection = ah * right + av * forward;
+		Vector3 moveDirection;
+
+		if (Mathf.Abs(av) > 0 && Mathf.Abs(ah) > 0)
+		{
+			moveDirection = (av * forward + ah * right).normalized;
+		}
+		else
+		{
+			moveDirection = ah * right + av * forward;
+		}
 
 		sphere.AddForce(Time.deltaTime * 1000 * moveDirection);
 		anchorCamera.transform.position = anchorOffset + this.transform.position;
